@@ -5,11 +5,9 @@ services:
       context: src/infernet-node
       args:
         INFERNET_NODE_VERSION: ${INFERNET_NODE_VERSION:-1.3.0}
-    stop_grace_period: 1m
-    restart: unless-stopped
-    platform: linux/amd64
-    ports:
-      - "4000:4000"
+    restart: on-failure
+    expose:
+      - "4000"
     environment:
       - RPC_URL=${RPC_URL:-https://base.blockpi.network/v1/rpc/public}
       - REGISTRY=${REGISTRY:-0x3B1554f346DFe5c482Bb4BA31b880c1C18412170}
@@ -18,6 +16,8 @@ services:
     volumes:
       - ./config/node.json:/app/config.draft.json
       - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - redis
     profiles:
@@ -33,7 +33,6 @@ services:
 
   deployer:
     image: lagunovsky/ritualnetwork-deploy-hello-consumer
-    platform: linux/amd64
     build:
       context: src/deploy-consumer
     command: ${DEPLOY_CONSUMER_COMMAND:-"for-free"}

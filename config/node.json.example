@@ -1,8 +1,8 @@
 {
-  "startup_wait": 5,
+  "startup_wait": 10,
   "chain": {
     "enabled": true,
-    "trail_head_blocks": 5,
+    "trail_head_blocks": 1,
     "rpc_url": "$RPC_URL",
     "registry_address": "$REGISTRY",
     "wallet": {
@@ -10,21 +10,21 @@
       "private_key": "$PRIVATE_KEY"
     },
     "snapshot_sync": {
-      "sleep": 1,
+      "sleep": 4,
       "batch_size": 1000,
-      "starting_sub_id": "$STARTING_SUB_ID"
+      "starting_sub_id": $STARTING_SUB_ID
     }
   },
   "containers": [
     {
-      "id": "hello-world",
+      "id": "hello-world-free",
       "image": "ritualnetwork/hello-world-infernet:latest",
       "external": true,
       "port": "3000",
       "allowed_delegate_addresses": [],
       "allowed_addresses": [],
       "allowed_ips": [],
-      "command": "--bind=0.0.0.0:3000 --workers=1",
+      "command": "--bind=0.0.0.0:3000 --workers=10",
       "env": {},
       "volumes": [],
       "generates_proofs": false,
