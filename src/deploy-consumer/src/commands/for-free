@@ -1,0 +1,3 @@
+#!/bin/bash
+
+forge script ../script/SayGM.free.s.sol:Say --broadcast --rpc-url "${RPC_URL}"

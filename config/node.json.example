@@ -1,0 +1,34 @@
+{
+  "startup_wait": 5,
+  "chain": {
+    "enabled": true,
+    "trail_head_blocks": 5,
+    "rpc_url": "$RPC_URL",
+    "registry_address": "$REGISTRY",
+    "wallet": {
+      "max_gas_limit": 5000000,
+      "private_key": "$PRIVATE_KEY"
+    },
+    "snapshot_sync": {
+      "sleep": 1,
+      "batch_size": 1000,
+      "starting_sub_id": "$STARTING_SUB_ID"
+    }
+  },
+  "containers": [
+    {
+      "id": "hello-world",
+      "image": "ritualnetwork/hello-world-infernet:latest",
+      "external": true,
+      "port": "3000",
+      "allowed_delegate_addresses": [],
+      "allowed_addresses": [],
+      "allowed_ips": [],
+      "command": "--bind=0.0.0.0:3000 --workers=1",
+      "env": {},
+      "volumes": [],
+      "generates_proofs": false,
+      "accepted_payments": {}
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+#!/bin/bash
+
+action=${1:-help}
+
+function help() {
+  echo "Usage: $0 <action>"
+  echo "Actions:"
+  echo "  prepare             Prepare a environment for running node (install dependencies, etc.)"
+  echo "  start               Start a node"
+  echo "  logs                Show logs"
+  echo "  deploy <free|paid>  Deploy a free consumer"
+  echo "  reset               Stop containers and remove data"
+}
+
+function prepare() {
+  set -e pipefail
+
+  os_name=$(lsb_release -si)
+  os_version=$(lsb_release -sr)
+  major_version=$(echo "$os_version" | cut -d. -f1)
+
+  if [ "$os_name" != "Ubuntu" ] && [ "$major_version" -ge 20 ]; then
+    log_error "This script requires Ubuntu 20.04 or later"
+    exit 1
+  fi
+
+  if ! command -v docker >/dev/null 2>&1; then
+    curl https://get.docker.com | sh
+    if [[ $USER != "root" ]]; then
+      sudo usermod -aG docker "$USER"
+      echo "⚠️ You need logging out and back in again"
+    fi
+  fi
+}
+
+function configure() {
+  if [[ ! -f ".env" ]]; then
+    cp ".env.example" ".env"
+
+    read -r -e -p "Provide rpc url: " -i "https://base.blockpi.network/v1/rpc/public" RPC_URL
+    sed -i "s/RPC_URL=.*/RPC_URL=${RPC_URL}/" .env
+
+    read -r -e -p "Provide your private key: " PRIVATE_KEY
+    sed -i "s/PRIVATE_KEY=.*/PRIVATE_KEY=${PRIVATE_KEY}/" .env
+  fi
+
+  if [[ ! -f "config/node.json" ]]; then
+    cp "config/node.json.example" "config/node.json"
+  fi
+
+  if [[ ! -f "config/redis.conf" ]]; then
+    cp "config/redis.conf.example" "config/redis.conf"
+  fi
+}
+
+function start() {
+  docker compose up -d
+}
+
+function deploy() {
+  if [ "${1}" == "free" ]; then
+    DEPLOY_CONSUMER_COMMAND=for-free docker compose --profile deploy up
+  elif [ "${1}" == "paid" ]; then
+    DEPLOY_CONSUMER_COMMAND=for-paid docker compose --profile deploy up
+  else
+    echo "Usage: $0 deploy <free|paid>"
+    exit 1
+  fi
+}
+
+function reset() {
+  docker compose --profile node,deploy down
+  rm -rf .env data
+}
+
+if [ "${action}" == "prepare" ]; then
+  prepare
+elif [ "${action}" == "start" ]; then
+  configure
+  start
+elif [ "${action}" == "deploy" ]; then
+  configure
+  deploy "${@:2}"
+elif [ "${action}" == "reset" ]; then
+  reset
+elif [ "${action}" == "logs" ]; then
+  docker compose logs node -f
+else
+  help
+  exit 1
+fi
