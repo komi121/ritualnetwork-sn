@@ -6,6 +6,12 @@ services:
       args:
         INFERNET_NODE_VERSION: ${INFERNET_NODE_VERSION:-1.3.0}
     restart: on-failure
+    healthcheck:
+      test: curl --fail http://localhost:4000/health || exit 1
+      retries: 1
+      interval: 2m
+      timeout: 1s
+      start_period: 30s
     expose:
       - "4000"
     environment:
