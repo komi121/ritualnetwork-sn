@@ -1,0 +1,3 @@
+[submodule "upstream/infernet-container-starter"]
+	path = upstream/infernet-container-starter
+	url = https://github.com/ritual-net/infernet-container-starter

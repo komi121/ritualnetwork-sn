@@ -1,10 +1,10 @@
 services:
-  node:
-    image: lagunovsky/ritualnetwork-infernet-node:${INFERNET_NODE_VERSION:-1.3.0}
+  manager:
+    image: lagunovsky/ritualnetwork-infernet-manager:${INFERNET_MANAGER_VERSION:-1.3.0}
     build:
-      context: src/infernet-node
+      context: src/infernet-manager
       args:
-        INFERNET_NODE_VERSION: ${INFERNET_NODE_VERSION:-1.3.0}
+        INFERNET_MANAGER_VERSION: ${INFERNET_MANAGER_VERSION:-1.3.0}
     restart: on-failure
     healthcheck:
       test: curl --fail http://localhost:4000/health || exit 1

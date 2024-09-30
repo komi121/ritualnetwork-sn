@@ -1,6 +1,6 @@
-ARG INFERNET_NODE_VERSION=latest
+ARG INFERNET_MANAGER_VERSION=latest
 
-FROM ritualnetwork/infernet-node:${INFERNET_NODE_VERSION} AS runtime
+FROM ritualnetwork/infernet-node:${INFERNET_MANAGER_VERSION} AS runtime
 
 RUN apt-get update && \
     apt install -y gettext-base && \

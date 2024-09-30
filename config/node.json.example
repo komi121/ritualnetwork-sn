@@ -17,14 +17,14 @@
   },
   "containers": [
     {
-      "id": "hello-world-free",
-      "image": "ritualnetwork/hello-world-infernet:latest",
+      "id": "gm-free",
+      "image": "lagunovsky/ritualnetwork-infernet-worker-gm:latest",
       "external": true,
       "port": "3000",
       "allowed_delegate_addresses": [],
       "allowed_addresses": [],
       "allowed_ips": [],
-      "command": "--bind=0.0.0.0:3000 --workers=10",
+      "command": "--bind=0.0.0.0:3000 --workers=4",
       "env": {},
       "volumes": [],
       "generates_proofs": false,
