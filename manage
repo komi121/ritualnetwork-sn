@@ -39,6 +39,8 @@ function configure() {
 
     if [[ ! -f ".env.defaults" ]]; then
       cp ".env.example" ".env.defaults"
+    else
+      source .env.defaults
     fi
 
     read -r -e -p "Provide rpc url: " -i "${RPC_URL}" RPC_URL
@@ -74,6 +76,7 @@ function deploy() {
 }
 
 function reset() {
+  docker compose --profile node,deploy kill
   docker compose --profile node,deploy down
   rm -rf .env data config/node.json config/redis.conf
 }
