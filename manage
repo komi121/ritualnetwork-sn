@@ -37,8 +37,13 @@ function configure() {
   if [[ ! -f ".env" ]]; then
     cp ".env.example" ".env"
 
-    read -r -e -p "Provide rpc url: " RPC_URL
+    if [[ ! -f ".env.defaults" ]]; then
+      cp ".env.example" ".env.defaults"
+    fi
+
+    read -r -e -p "Provide rpc url: " -i "${RPC_URL}" RPC_URL
     sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env
+    sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env.defaults
 
     read -r -e -p "Provide your private key: " PRIVATE_KEY
     sed -i "s@PRIVATE_KEY=.*@PRIVATE_KEY=${PRIVATE_KEY}@" .env
