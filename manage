@@ -10,6 +10,8 @@ function help() {
   echo "  logs                Show logs"
   echo "  deploy <free|paid>  Deploy a free consumer"
   echo "  reset               Stop containers and remove data"
+  echo "  restart             Restart a node"
+  echo "  stop                Stop a node"
 }
 
 function prepare() {
@@ -93,6 +95,11 @@ elif [ "${action}" == "reset" ]; then
   reset
 elif [ "${action}" == "logs" ]; then
   docker compose logs node -f
+elif [ "${action}" == "restart" ]; then
+  docker compose down
+  docker compose up
+elif [ "${action}" == "stop" ]; then
+  docker compose down
 else
   help
   exit 1
