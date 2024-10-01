@@ -19,10 +19,6 @@
   "server": {
     "port": 4000
   },
-  "docker": {
-    "username": "username",
-    "password": "password"
-  },
   "redis": {
     "host": "redis",
     "port": 6379
