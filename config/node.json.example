@@ -1,4 +1,5 @@
 {
+  "forward_stats": false,
   "startup_wait": 10,
   "chain": {
     "enabled": true,
@@ -15,9 +16,20 @@
       "starting_sub_id": $STARTING_SUB_ID
     }
   },
+  "server": {
+    "port": 4000
+  },
+  "docker": {
+    "username": "username",
+    "password": "password"
+  },
+  "redis": {
+    "host": "redis",
+    "port": 6379
+  },
   "containers": [
     {
-      "id": "gm-free",
+      "id": "hello-world",
       "image": "lagunovsky/ritualnetwork-infernet-worker-gm:latest",
       "external": true,
       "port": "3000",
