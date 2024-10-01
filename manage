@@ -76,8 +76,8 @@ function deploy() {
 }
 
 function reset() {
-  docker compose --profile node,deploy kill
-  docker compose --profile node,deploy down
+  docker compose --profile node --profile deploy kill
+  docker compose --profile node --profile deploy down
   rm -rf .env data config/node.json config/redis.conf
 }
 
