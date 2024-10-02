@@ -28,4 +28,7 @@ cd ritualnetwork-sn
 | `./manage start`               | Start a node                                                         |
 | `./manage logs`                | Show node logs                                                       |
 | `./manage deploy <free\|paid>` | Deploy a consumer                                                    |
-| `./manage reset`               | Stop containers and remove data                                      |
+| `./manage logs`                | Show logs of the node                                                |
+| `./manage stop`                | Stop the node                                                        |
+| `./manage restart`             | Restart the node                                                     |
+| `./manage reset`               | Reset the node                                                       |
