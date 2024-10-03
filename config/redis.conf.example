@@ -17,7 +17,7 @@ dir /var/lib/redis
 save 60 1
 
 # Maximum memory before eviction starts
-maxmemory 1gb
+maxmemory 128mb
 
 # Eviction policy
 maxmemory-policy allkeys-lru
