@@ -1,10 +1,10 @@
 services:
   manager:
-    image: lagunovsky/ritualnetwork-infernet-manager:${INFERNET_MANAGER_VERSION:-1.2.0}
+    image: lagunovsky/ritualnetwork-infernet-manager:${INFERNET_MANAGER_VERSION:-1.4.0}
     build:
       context: src/infernet-manager
       args:
-        INFERNET_MANAGER_VERSION: ${INFERNET_MANAGER_VERSION:-1.2.0}
+        INFERNET_MANAGER_VERSION: ${INFERNET_MANAGER_VERSION:-1.4.0}
     restart: on-failure
     healthcheck:
       test: curl --fail http://localhost:4000/health || exit 1
@@ -17,7 +17,7 @@ services:
     environment:
       - RPC_URL=${RPC_URL:-https://base.blockpi.network/v1/rpc/public}
       - REGISTRY=${REGISTRY:-0x3B1554f346DFe5c482Bb4BA31b880c1C18412170}
-      - STARTING_SUB_ID=${STARTING_SUB_ID:-165900}
+      - STARTING_SUB_ID=${STARTING_SUB_ID:-235070}
       - PRIVATE_KEY=${PRIVATE_KEY}
     volumes:
       - ./config/node.json:/app/config.draft.json
