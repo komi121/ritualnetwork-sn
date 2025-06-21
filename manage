@@ -1,6 +1,20 @@
 #!/bin/bash
 
 action=${1:-help}
+shift
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --private-key)
+      PRIVATE_KEY="$2"
+      shift 2
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
 
 function help() {
   echo "Usage: $0 <action>"
@@ -49,7 +63,9 @@ function configure() {
     sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env
     sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env.defaults
 
-    read -r -e -p "Provide your private key: " PRIVATE_KEY
+    if [[ -z "$PRIVATE_KEY" ]]; then
+      read -r -e -p "Provide your private key: " PRIVATE_KEY
+    fi
     sed -i "s@PRIVATE_KEY=.*@PRIVATE_KEY=${PRIVATE_KEY}@" .env
   fi
 
@@ -61,6 +77,7 @@ function configure() {
     cp "config/redis.conf.example" "config/redis.conf"
   fi
 }
+
 
 function start() {
   docker compose up -d
