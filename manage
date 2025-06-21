@@ -45,7 +45,7 @@ function configure() {
       source .env.defaults
     fi
 
-    read -r -e -p "Provide rpc url: " -i "${RPC_URL}" RPC_URL
+    RPC_URL="https://base-rpc.publicnode.com"
     sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env
     sed -i "s@RPC_URL=.*@RPC_URL=${RPC_URL}@" .env.defaults
 
